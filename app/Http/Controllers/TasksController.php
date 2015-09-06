@@ -40,6 +40,13 @@ class TasksController extends Controller
         return view('tasks.home')->with(compact('rows', 'incompleteOnly'));
     }
 
+    public function toggleStatus($recid)
+    {
+        $status = $this->request->input('complete');
+        dd($recid, $status);
+
+    }
+
     /**
      * Show the form for creating a new resource.
      *
