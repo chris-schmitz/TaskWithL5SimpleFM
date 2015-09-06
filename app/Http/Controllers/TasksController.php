@@ -42,8 +42,8 @@ class TasksController extends Controller
 
     public function toggleStatus($recid)
     {
-        $status = $this->request->input('complete');
-        dd($recid, $status);
+        $iscomplete = $this->request->input('iscomplete');
+        dd($recid, $iscomplete, $status);
 
     }
 
