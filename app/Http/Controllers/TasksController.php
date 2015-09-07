@@ -43,7 +43,21 @@ class TasksController extends Controller
     public function toggleStatus($recid)
     {
         $iscomplete = $this->request->input('iscomplete');
-        dd($recid, $iscomplete, $status);
+        try {
+            switch($iscomplete){
+                case true:
+                    $this->task->markComplete($recid)->executeCommand();
+                    $message = "Task marked complete.";
+                    break;
+                case false: 
+                    $this->task->markIncomplete($recid)->executeCommand();
+                    $message = "Task marked incomplete.";
+                    break;
+                default:
+                    $message = "Unable to change task status.";
+
+            }
+        }
 
     }
 
