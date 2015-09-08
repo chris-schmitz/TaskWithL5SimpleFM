@@ -31,7 +31,9 @@
                 </div>
             </form>
             <div class='clearfix'</div>
-            <button class='btn btn-success action-button pull-right'>New Task</button>
+            <form action="{{ route('tasks.create') }}" method="GET">
+                <button class='btn btn-success action-button pull-right'>New Task</button>
+            </form>
         </div>
     </div>
 @stop

@@ -13,6 +13,11 @@ class TasksController extends Controller
 
     protected $request;
 
+    protected $validators = [
+        'title' => 'required',
+        'description' => 'required',
+    ];
+
     public function __construct(Task $task, Request $request)
     {
         $this->task = $task;
@@ -37,29 +42,7 @@ class TasksController extends Controller
         } catch (RecordsNotFoundException $e) {
             $rows = [];
         }
-        // $alert = ['type' => 'success', 'message' => 'Success worked'];
         return view('tasks.home')->with(compact('rows', 'incompleteOnly'));
-    }
-
-    public function toggleStatus($recid)
-    {
-        $iscomplete = $this->request->input('iscomplete');
-        try {
-            switch ($iscomplete) {
-                case true:
-                    $this->task->markComplete($recid)->executeCommand();
-                    break;
-                case false:
-                    $this->task->markIncomplete($recid)->executeCommand();
-                    break;
-                default:
-                    $message = "Unable to change task status.";
-                    break;
-            }
-        } catch (\Exception $e) {
-            $message = $e->getMessage();
-        }
-
     }
 
     /**
@@ -69,29 +52,37 @@ class TasksController extends Controller
      */
     public function create()
     {
-        //
+        return view('tasks.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  Request  $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store()
     {
-        dd($request);
-    }
+        $this->validate($this->request, $this->validators);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $recid
-     * @return Response
-     */
-    public function show($recid)
-    {
-        //
+        $data = $this->request->except('_method', '_token');
+
+        try {
+            $result = $this->task->createRecord($data)->executeCommand();
+
+            $alert = [
+                'type' => 'success',
+                'message' => 'Task ' . $data['title'] . ' added.',
+            ];
+            $this->request->session()->flash('alert', $alert);
+            return redirect()->route('tasks.index');
+        } catch (GeneralException $e) {
+            $alert = [
+                'type' => 'danger',
+                'message' => $e->getMessage(),
+            ];
+            $this->request->session()->flash('alert', $alert);
+            return back()->withInput();
+        }
     }
 
     /**
@@ -114,18 +105,17 @@ class TasksController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  Request  $request
      * @param  int  $recid
      * @return Response
      */
-    public function update(Request $request, $recid)
+    public function update($recid)
     {
-        $validators = [
-            'title' => 'required',
-            'description' => 'required',
-        ];
-        $this->validate($request, $validators);
-        $data = $request->except('_method', '_token');
+        if ($this->request->input('delete') == 'true') {
+            return $this->destroy($recid);
+        }
+
+        $this->validate($this->request, $this->validators);
+        $data = $this->request->except('_method', '_token');
 
         try {
             $result = $this->task->updateRecord($recid, $data)->executeCommand();
@@ -133,15 +123,16 @@ class TasksController extends Controller
                 'type' => 'success',
                 'message' => sprintf("Task %s updated.", $data['title']),
             ];
-            return redirect()->route('tasks.index')->with(compact('alert'));
+            $this->request->session()->flash('alert', $alert);
+            return redirect()->route('tasks.index');
         } catch (GeneralException $e) {
             $alert = [
                 'type' => 'danger',
                 'message' => $e->getMessage(),
             ];
-            return back()->with(compact('alert'));
+            $this->request->session()->flash('alert', $alert);
+            return back();
         }
-
     }
 
     /**
@@ -152,6 +143,24 @@ class TasksController extends Controller
      */
     public function destroy($recid)
     {
-        //
+        try {
+            $this->task->deleteRecord($recid)->executeCommand();
+            $alert = [
+                'type' => 'success',
+                'message' => 'Task deleted.',
+            ];
+        } catch (GeneralException $e) {
+            if ($e->getCode() == 101) {
+                $message = "Record is missing.";
+            } else {
+                $message = $e->getMessage();
+            }
+            $alert = [
+                'type' => 'danger',
+                'message' => $message,
+            ];
+        }
+        $this->request->session()->flash('alert', $alert);
+        return redirect()->route('tasks.index');
     }
 }
