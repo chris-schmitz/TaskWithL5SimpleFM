@@ -12,12 +12,29 @@
         @else
             <table class="table table-striped table-hover">
                 <tr>
-                    <th>Title</th>
+                    <th>
+                        Title
+                        <button  class='fa fa-sort'></button>
+                    </th>
+                    <th class='short-column'>
+                        Created On
+                        <button  class='fa fa-sort'></button>
+                    </th>
+                    <th class='short-column'>
+                        Complete
+                        <button class='fa fa-sort'></button>
+                    </th>
                 </tr>
                 @foreach($rows as $row)
                     <tr onclick="onRowClick({{ $row['recid'] }})">
                         <td>
                             {{ $row['title'] }}
+                        </td>
+                        <td>
+                            10/21/2015
+                        </td>
+                        <td>
+                            true
                         </td>
                     </tr>
                 @endforeach
