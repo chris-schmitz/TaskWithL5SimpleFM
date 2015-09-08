@@ -15,7 +15,6 @@ class TasksController extends Controller
 
     protected $validators = [
         'title' => 'required',
-        'description' => 'required',
     ];
 
     public function __construct(Task $task, Request $request)

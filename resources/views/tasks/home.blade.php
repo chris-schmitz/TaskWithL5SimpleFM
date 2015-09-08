@@ -12,9 +12,10 @@
         @else
             <table class="table table-striped table-hover">
                 <tr>
+                    <form action="{{ route('tasks.index') }}" method="GET">
                     <th>
                         Title
-                        <button  class='fa fa-sort'></button>
+                        <button  type='submit' name='sort' value='title' class='fa fa-sort'></button>
                     </th>
                     <th class='short-column'>
                         Created On
@@ -24,6 +25,7 @@
                         Complete
                         <button class='fa fa-sort'></button>
                     </th>
+                    </form>
                 </tr>
                 @foreach($rows as $row)
                     <tr onclick="onRowClick({{ $row['recid'] }})">
@@ -31,10 +33,10 @@
                             {{ $row['title'] }}
                         </td>
                         <td>
-                            10/21/2015
+                            {{ $row['created_at'] }}
                         </td>
                         <td>
-                            true
+                            {{ $row['complete'] }}
                         </td>
                     </tr>
                 @endforeach
@@ -57,7 +59,6 @@
 
 @section('pageSpecificJavascript')
 function onRowClick(recid){
-    debugger;
     var url = '/tasks/' + recid + '/edit';
     window.document.location=url;
 }

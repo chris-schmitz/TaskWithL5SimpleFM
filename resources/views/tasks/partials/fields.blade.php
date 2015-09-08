@@ -8,5 +8,5 @@
 </div>
 <div class='form-group'>
     <label for='complete'>Complete</label>
-    <input type='checkbox' name='complete' class='form-control' {{ ( !isset($record['complete']) || $record['complete'] == '' ? '' : 'checked') }} >
+    <input type='checkbox' name='complete' class='form-control' value='true' {{ ( !isset($record['complete']) || $record['complete'] == '' ? '' : 'checked') }} >
 </div>
