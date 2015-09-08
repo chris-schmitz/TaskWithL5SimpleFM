@@ -30,13 +30,22 @@ class TasksController extends Controller
      */
     public function index()
     {
+        $incompleteOnly = !!$this->request->input('incompleteonly');
+        $sort = $this->request->input('sort');
+
         try {
-            $incompleteOnly = !!$this->request->input('incompleteonly');
+
+            if (isset($sort)) {
+                $sortCriteria = ['field' => $sort, 'rank' => 1];
+                $this->task->sort([$sortCriteria]);
+            }
+
             if (!$incompleteOnly) {
                 $result = $this->task->findAll()->executeCommand();
             } else {
                 $result = $this->task->findAllIncomplete()->executeCommand();
             }
+
             $rows = $result->getRows();
         } catch (RecordsNotFoundException $e) {
             $rows = [];

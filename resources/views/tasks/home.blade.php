@@ -13,18 +13,19 @@
             <table class="table table-striped table-hover">
                 <tr>
                     <form action="{{ route('tasks.index') }}" method="GET">
-                    <th>
-                        Title
-                        <button  type='submit' name='sort' value='title' class='fa fa-sort'></button>
-                    </th>
-                    <th class='short-column'>
-                        Created On
-                        <button  class='fa fa-sort'></button>
-                    </th>
-                    <th class='short-column'>
-                        Complete
-                        <button class='fa fa-sort'></button>
-                    </th>
+                        <input type='hidden' name='incompleteonly' value="{{ $incompleteOnly == true ? 'true' : ''}}">
+                        <th>
+                            Title
+                            <button  type='submit' name='sort' value='title' class='fa fa-sort'></button>
+                        </th>
+                        <th class='short-column'>
+                            Created On
+                            <button type='submit' name='sort' value='created_on' class='fa fa-sort'></button>
+                        </th>
+                        <th class='short-column'>
+                            Complete
+                            <button type='submit' name='sort' value='complete' class='fa fa-sort'></button>
+                        </th>
                     </form>
                 </tr>
                 @foreach($rows as $row)
@@ -33,7 +34,7 @@
                             {{ $row['title'] }}
                         </td>
                         <td>
-                            {{ $row['created_at'] }}
+                            {{ $row['created_on'] }}
                         </td>
                         <td>
                             {{ $row['complete'] }}
