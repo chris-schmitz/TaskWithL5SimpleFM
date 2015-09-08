@@ -14,17 +14,18 @@
                 <tr>
                     <form action="{{ route('tasks.index') }}" method="GET">
                         <input type='hidden' name='incompleteonly' value="{{ $incompleteOnly == true ? 'true' : ''}}">
+                        <input type='hidden' name='sortdirection' value='{{ ($currentSort["direction"] == "ascend") ? "descend" : "ascend" }}'>
                         <th>
                             Title
-                            <button  type='submit' name='sort' value='title' class='fa fa-sort'></button>
+                            <button  type='submit' name='sortfield' value='title' class='fa fa-sort'></button>
                         </th>
                         <th class='short-column'>
                             Created On
-                            <button type='submit' name='sort' value='created_on' class='fa fa-sort'></button>
+                            <button type='submit' name='sortfield' value='created_on' class='fa fa-sort'></button>
                         </th>
                         <th class='short-column'>
                             Complete
-                            <button type='submit' name='sort' value='complete' class='fa fa-sort'></button>
+                            <button type='submit' name='sortfield' value='complete' class='fa fa-sort'></button>
                         </th>
                     </form>
                 </tr>
@@ -46,6 +47,8 @@
         <div class='panel-footer'>
             <form action='{{ route("tasks.index")}}' class='pull-left' method='GET'>
                 <div class='btn-group'>
+                    <input type='hidden' name='sortfield' value='{{ $currentSort["field"] or "created_on"}}'>
+                    <input type='hidden' name='sortdirection' value='{{ ($currentSort["direction"] == "ascend") ? "descend" : "ascend" }}'>
                     <button class='btn {{ $incompleteOnly == true ? 'btn-primary' : ''}}' name='incompleteonly' value='true'>Incomplete Only</button>
                     <button class='btn {{ $incompleteOnly == false ? 'btn-primary' : ''}}'>Show All</button>
                 </div>

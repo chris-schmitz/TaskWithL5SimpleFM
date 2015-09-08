@@ -17,6 +17,8 @@ class TasksController extends Controller
         'title' => 'required',
     ];
 
+    protected $defaultSort = ['field' => 'Created_on', 'direction' => 'descend'];
+
     public function __construct(Task $task, Request $request)
     {
         $this->task = $task;
@@ -31,13 +33,22 @@ class TasksController extends Controller
     public function index()
     {
         $incompleteOnly = !!$this->request->input('incompleteonly');
-        $sort = $this->request->input('sort');
+        $sortField = $this->request->input('sortfield');
+        $sortDirection = $this->request->input('sortdirection');
+        $currentSort = $this->defaultSort;
 
         try {
 
-            if (isset($sort)) {
-                $sortCriteria = ['field' => $sort, 'rank' => 1];
+            if (isset($sortField)) {
+                $sortCriteria = ['field' => $sortField, 'rank' => 1];
+
+                if (!isset($sortDirection) || $sortDirection == 'ascend') {
+                    $sortCriteria['direction'] = 'ascend';
+                } else {
+                    $sortCriteria['direction'] = 'descend';
+                }
                 $this->task->sort([$sortCriteria]);
+                $currentSort = ['field' => $sortCriteria['field'], 'direction' => $sortCriteria['direction']];
             }
 
             if (!$incompleteOnly) {
@@ -50,7 +61,7 @@ class TasksController extends Controller
         } catch (RecordsNotFoundException $e) {
             $rows = [];
         }
-        return view('tasks.home')->with(compact('rows', 'incompleteOnly'));
+        return view('tasks.home')->with(compact('rows', 'incompleteOnly', 'currentSort'));
     }
 
     /**
