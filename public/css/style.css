@@ -13,3 +13,7 @@
 .action-button{
     width:90px;
 }
+
+.textarea{
+    height:300px!important;
+}
