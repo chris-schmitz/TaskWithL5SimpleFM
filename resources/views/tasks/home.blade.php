@@ -17,15 +17,15 @@
                         <input type='hidden' name='sortdirection' value='{{ ($currentSort["direction"] == "ascend") ? "descend" : "ascend" }}'>
                         <th>
                             Title
-                            <button  type='submit' name='sortfield' value='title' class='fa fa-sort'></button>
+                            <button  type='submit' name='sortfield' value='title' class='btn fa fa-sort {{($currentSort["field"] == "title") ? "highlight" : ""}}'></button>
                         </th>
                         <th class='short-column'>
                             Created On
-                            <button type='submit' name='sortfield' value='created_on' class='fa fa-sort'></button>
+                            <button type='submit' name='sortfield' value='created_on' class='btn fa fa-sort {{($currentSort["field"] == "created_on") ? "highlight" : ""}}'></button>
                         </th>
                         <th class='short-column'>
                             Complete
-                            <button type='submit' name='sortfield' value='complete' class='fa fa-sort'></button>
+                            <button type='submit' name='sortfield' value='complete' class='btn fa fa-sort {{($currentSort["field"] == "complete") ? "highlight" : ""}}'></button>
                         </th>
                     </form>
                 </tr>
@@ -46,9 +46,9 @@
         @endif
         <div class='panel-footer'>
             <form action='{{ route("tasks.index")}}' class='pull-left' method='GET'>
+                <input type='hidden' name='sortfield' value='{{ $currentSort["field"] or "created_on"}}'>
+                <input type='hidden' name='sortdirection' value='{{ ($currentSort["direction"] == "ascend") ? "descend" : "ascend" }}'>
                 <div class='btn-group'>
-                    <input type='hidden' name='sortfield' value='{{ $currentSort["field"] or "created_on"}}'>
-                    <input type='hidden' name='sortdirection' value='{{ ($currentSort["direction"] == "ascend") ? "descend" : "ascend" }}'>
                     <button class='btn {{ $incompleteOnly == true ? 'btn-primary' : ''}}' name='incompleteonly' value='true'>Incomplete Only</button>
                     <button class='btn {{ $incompleteOnly == false ? 'btn-primary' : ''}}'>Show All</button>
                 </div>
