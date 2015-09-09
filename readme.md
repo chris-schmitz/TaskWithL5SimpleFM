@@ -1,6 +1,6 @@
 # A simple Task app with L5SimpleFM
 
-This is a simple app built using Laravel to show how L5SimpleFM can be used to access data from A FileMaker Server.
+This is a simple app built using Laravel to show how [L5SimpleFM](https://github.com/chris-schmitz/L5SimpleFM) can be used to access data from A FileMaker Server.
 
 ## Prerequisites
 
