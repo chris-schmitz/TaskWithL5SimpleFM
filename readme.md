@@ -1,27 +1,71 @@
-## Laravel PHP Framework
+# A simple Task app with L5SimpleFM
 
-[![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
-[![Total Downloads](https://poser.pugx.org/laravel/framework/d/total.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Stable Version](https://poser.pugx.org/laravel/framework/v/stable.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Unstable Version](https://poser.pugx.org/laravel/framework/v/unstable.svg)](https://packagist.org/packages/laravel/framework)
-[![License](https://poser.pugx.org/laravel/framework/license.svg)](https://packagist.org/packages/laravel/framework)
+This is a simple app built using Laravel to show how L5SimpleFM can be used to access data from A FileMaker Server.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as authentication, routing, sessions, queueing, and caching.
+## Prerequisites
 
-Laravel is accessible, yet powerful, providing powerful tools needed for large, robust applications. A superb inversion of control container, expressive migration system, and tightly integrated unit testing support give you the tools you need to build any application with which you are tasked.
+The following tools are required to run this project:
 
-## Official Documentation
+- [Laravel 5.1](http://laravel.com/docs/5.1)
+- [Composer](https://getcomposer.org/)
+- [PHP version 5.5 or newer](http://php.net/manual/en/install.php)
+- [FileMaker Server version 13 or newer](http://www.filemaker.com/)
+- [Git](https://git-scm.com/)
 
-Documentation for the framework can be found on the [Laravel website](http://laravel.com/docs).
+## Setup
 
-## Contributing
+At the moment this setup is written from the perspective of a mac user. If it gets traction I'll write it from a windows user perspective.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
+- Open a terminal and clone a copy of the project to your computer:
 
-## Security Vulnerabilities
+        cd ~/Desktop
+        git clone https://github.com/chris-schmitz/TaskWithL5SimpleFM.git Tasks
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
+- Navigate to the root of the project folder and run a composer install:
 
-### License
+        cd ~/Desktop/Tasks
+        composer install
 
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
+- Download the `Task Database` FileMaker file [from the release section](https://github.com/chris-schmitz/TaskWithL5SimpleFM/releases) and host it on your FileMaker Server.
+
+
+## Database Credentials
+
+### Full Access Account
+- Username: **Admin**
+- Password: **admin!password**
+
+NOTE: **If you're going to host this example file on a publicly accessible FileMaker server, CHANGE THE FULL ACCESS ACCOUNT PASSWORD!**
+
+### Web Access Account
+- Username: **web_user**
+- Password: **webdemo!**
+
+
+## Configuration
+
+- In the terminal, navigate back to the root of your project Rename your `.env.example` file `.env`:
+
+        cd ~/Desktop/Tasks/
+        cp .env.example .env
+
+- Run the command to generate the application key:
+
+        php artisan key:generate
+
+- In the Laravel project, review the `FM_` keys in the `.env` and adjust the `FM_HOST` address if needed:
+
+            FM_DATABASE=Task Database
+            FM_USERNAME=web_user
+            FM_PASSWORD=webdemo!
+            FM_HOST=127.0.0.1 # If you're FileMaker Server is not on your local machine, change this IP to the IP or host name of the Server
+            
+
+
+## Running it
+- Navigate into the project's public folder and launch a php built in server:
+
+        cd ~/Desktop/Tasks/public
+        php -S localhost:8001
+        
+- Open a web browser and navigate to the url `http://localhost:8001`
