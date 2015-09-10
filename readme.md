@@ -1,16 +1,17 @@
 # A simple Task app with L5SimpleFM
 
-This is a simple app built using Laravel to show how [L5SimpleFM](https://github.com/chris-schmitz/L5SimpleFM) can be used to access data from A FileMaker Server.
+This is a simple app built using Laravel to show how [L5SimpleFM](https://github.com/chris-schmitz/L5SimpleFM) can be used to access data from a FileMaker Server.
 
 ## Prerequisites
 
 The following tools are required to run this project:
 
-- [Laravel 5.1](http://laravel.com/docs/5.1)
-- [Composer](https://getcomposer.org/)
-- [PHP version 5.5 or newer](http://php.net/manual/en/install.php)
-- [FileMaker Server version 13 or newer](http://www.filemaker.com/)
-- [Git](https://git-scm.com/)
+- <a href="http://php.net/manual/en/install.php" target="_blank">PHP version 5.5 or newer</a>
+- <a href="https://getcomposer.org/" target="_blank">Composer</a>
+    - If you're installing composer for the first time, make sure you <a href="https://getcomposer.org/doc/00-intro.md#globally" target="_blank">install composer globally</a>
+- <a href="http://laravel.com/docs/5.1" target="_blank">Laravel 5.1</a>
+- <a href="https://git-scm.com/" target="_blank">Git</a>
+- <a href="http://www.filemaker.com/" target="_blank">FileMaker Server version 13 or newer</a>
 
 ## Setup
 
