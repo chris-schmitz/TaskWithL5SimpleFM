@@ -11,7 +11,7 @@ The following tools are required to run this project:
     - If you're installing composer for the first time, make sure you <a href="https://getcomposer.org/doc/00-intro.md#globally" target="_blank">install composer globally</a>
 - <a href="http://laravel.com/docs/5.1" target="_blank">Laravel 5.1</a>
 - <a href="https://git-scm.com/" target="_blank">Git</a>
-- <a href="http://www.filemaker.com/" target="_blank">FileMaker Server version 13 or newer</a>
+- <a href="http://store.filemaker.com/US/ENG/LIC/" target="_blank">FileMaker Server version 13 or newer</a>
 
 ## Setup
 
